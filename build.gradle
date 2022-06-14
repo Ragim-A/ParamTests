@@ -11,13 +11,16 @@ repositories {
 
 dependencies {
     testImplementation(
-            "com.codeborne:selenide:6.5.0",
-            "org.junit.jupiter:junit-jupiter:5.8.2",
-            "com.google.guava:31.1-jre",
+            'com.codeborne:selenide:6.5.0',
+            'org.junit.jupiter:junit-jupiter:5.8.2',
+            'com.google.guava:guava:31.1-jre',
             'com.codeborne:selenide:6.6.2'
     )
 }
 
 test {
     useJUnitPlatform()
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
