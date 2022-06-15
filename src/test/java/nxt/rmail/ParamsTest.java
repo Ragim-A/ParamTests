@@ -35,7 +35,6 @@ public class ParamsTest {
         $(By.id("section_lvl2")).shouldHave(text(testData));
     }
 
-    //    @CsvFileSource(resources = "test_data/1.csv")
     @CsvSource(value = {
             "Арбуз, Арбуз Черный принц",
             "Блинчики, Блинчики с курицей"
@@ -49,33 +48,22 @@ public class ParamsTest {
         $(By.id("section_lvl2")).shouldHave(text(expectedResult));
     }
 
-    static Stream<Arguments> vvTestVeryComplexDataProvider() {
+
+
+    static Stream<Arguments> vvTestHardDataProvider() {
         return Stream.of(
-                Arguments.of("JUnit 5", asList("JUnit 5", "framework")),
-                Arguments.of("TestNG", asList("JUnit", "framework"))
+                Arguments.of("Арбуз", asList("Арбуз Черный принц", "Жвачка натуральная")),
+                Arguments.of("Блинчики", asList("Блинчики с курицей", "Блинчкики с творогом"))
         );
     }
 
-    @MethodSource(value = "yaTestVeryComplexDataProvider")
-    @Disabled
+    @MethodSource(value = "vvTestHardDataProvider")
+
     @ParameterizedTest(name = "При поиске в яндексе по запросу {0} в результатах отображается текст {1}")
-    void yaTestHard(String searchData, List<String> expectedResult) {
-        Selenide.open("https://ya.ru");
-        $("#text").setValue(searchData);
-        $("button[type='submit']").click();
-        $$("li.serp-item").shouldHave(CollectionCondition.texts(expectedResult));
+    void vvTestHard(String searchData, List<String> expectedResult) {
+        Selenide.open("https://vkusvill.ru/");
+        $(By.name("q")).setValue(searchData);
+        $(By.name("q")).pressEnter();
+        $$(By.id("ProductCard__content")).shouldHave(CollectionCondition.texts(expectedResult));
     }
-
-//    @EnumSource(Sex.class)
-//    @ParameterizedTest
-//    void enumTest(Sex sex) {
-//        Selenide.open("https://ya.ru");
-//        $("#text").setValue(sex.desc);
-//        $("button[type='submit']").click();
-//        $$("li.serp-item").find(text(sex.desc)).shouldBe(visible);
-//    }
-
-
-//    public String toString() {
-//        return super.toString();
     }
